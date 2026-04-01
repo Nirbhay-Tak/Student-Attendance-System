@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Class</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-center">
+        <div class="card">
+            <div class="page-header">
+                <div>
+                    <h2>Create Class</h2>
+                    <p>Define a new class before taking attendance.</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/teacher" class="button outline">Dashboard</a>
+                    <a href="/logout" class="button outline">Logout</a>
+                </div>
+            </div>
+
+            <form method="POST" class="form-stack">
+                <label>Class Name</label>
+                <input type="text" name="class_name" required>
+
+                <label>Subject</label>
+                <input type="text" name="subject" required>
+
+                <label>Description</label>
+                <textarea name="description" rows="4"></textarea>
+
+                <button type="submit" class="button">Save Class</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

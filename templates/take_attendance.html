@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-center">
+        <div class="card wide-card">
+            <div class="page-header">
+                <div>
+                    <h2>Take Attendance</h2>
+                    <p>Select a class and mark each student present or absent.</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/teacher" class="button outline">Dashboard</a>
+                    <a href="/logout" class="button outline">Logout</a>
+                </div>
+            </div>
+
+            <form method="POST" class="form-stack">
+                <label>Select Class</label>
+                <select name="class_id">
+                    {% for class_item in classes %}
+                        <option value="{{ class_item.id }}" {% if selected_class and class_item.id == selected_class.id %}selected{% endif %}>
+                            {{ class_item.class_name }} — {{ class_item.subject }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <div class="box">
+                    <h3>Students</h3>
+                    {% if students %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Roll Number</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{ student.username }}</td>
+                                        <td>{{ student.username }}</td>
+                                        <td>
+                                            <label><input type="radio" name="status_{{ student.id }}" value="Present" checked> Present</label>
+                                            <label><input type="radio" name="status_{{ student.id }}" value="Absent"> Absent</label>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No students found.</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="button">Save Attendance</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-center">
+        <div class="card wide-card">
+            <div class="page-header">
+                <div>
+                    <h2>Teacher Dashboard</h2>
+                    <p>Manage classes and attendance records</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/create_class" class="button outline">Create Class</a>
+                    <a href="/take_attendance" class="button">Take Attendance</a>
+                    <a href="/logout" class="button outline">Logout</a>
+                </div>
+            </div>
+
+            <section class="box">
+                <h3>Classes</h3>
+                {% if classes %}
+                    <ul class="simple-list">
+                        {% for class_item in classes %}
+                            <li>
+                                <strong>{{ class_item.class_name }}</strong> &mdash; {{ class_item.subject }}
+                                <div class="small">{{ class_item.description }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No classes defined yet.</p>
+                {% endif %}
+            </section>
+
+            <section class="box">
+                <h3>Attendance Records</h3>
+                {% if records %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                                <tr>
+                                    <td>{{ record.student.username }}</td>
+                                    <td>{{ record.class_ref.class_name }}</td>
+                                    <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
+                                    <td>{{ record.status }}</td>
+                                    <td><a href="/delete_attendance/{{ record.id }}" class="link-button">Delete</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No attendance records yet.</p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</body>
+</html>

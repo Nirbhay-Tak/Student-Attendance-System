@@ -14,6 +14,7 @@ class Attendance(db.Model):
     roll_no = db.Column(db.String(100), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(20))
 
 @app.route('/')
 def index():
@@ -37,6 +38,9 @@ def delete_record(id):
     db.session.commit()
     return redirect('/')
 
-# Create tables on startup
-with app.app_context():
-    db.create_all()
+# Create tables on startup with error handling
+try:
+    with app.app_context():
+        db.create_all()
+except Exception as e:
+    print(f"Warning: Could not create database tables: {e}")

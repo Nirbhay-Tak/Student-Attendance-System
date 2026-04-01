@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-center">
+        <div class="card wide-card">
+            <div class="page-header">
+                <div>
+                    <h2>Student Dashboard</h2>
+                    <p>Your attendance history</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/logout" class="button outline">Logout</a>
+                </div>
+            </div>
+
+            <section class="box">
+                <div class="summary-row">
+                    <div><strong>Total Records:</strong> {{ records|length }}</div>
+                    <div><strong>Attendance:</strong> {{ percentage }}%</div>
+                </div>
+                {% if records %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                                <tr>
+                                    <td>{{ record.class_ref.class_name }}</td>
+                                    <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
+                                    <td>{{ record.status }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No attendance records available yet.</p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</body>
+</html>
